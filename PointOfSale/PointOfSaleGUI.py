@@ -8,7 +8,9 @@ Builder.load_string("""
 # Main menu when opening application
 <MainMenu>:
     BoxLayout:
-    
+        orientation: 'horizontal'
+        Label:
+            text: 'Sales Menu'
         BoxLayout:
             orientation: 'vertical'
             Label:
@@ -54,15 +56,54 @@ Builder.load_string("""
 # Screen switch when processing sale
 <SaleProcessing>:
     BoxLayout:
-        Button:
-            text: 'Back'
-            on_press:
-                root.manager.transition.direction = "right"
-                root.manager.transition.duration = .25
-                root.manager.current = "mainMenu"
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text: 'SKU:' 
+                    TextInput:
+                        id: skuEntry
+                        font_size: 32
+                        multiline: False
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text: 'Quantity:'
+                    TextInput:
+                        id: qtyEntry
+                        font_size: 32
+                        multiline: False
+            
+            BoxLayout:
+                Button:
+                    text: 'Back'
+                    on_press:
+                        root.manager.transition.direction = "right"
+                        root.manager.transition.duration = .25
+                        root.manager.current = "mainMenu"
+                Button: 
+                    text: 'Add'
+                Button:
+                    text: 'Total'
+                    on_press:
+                        root.manager.transition.direction = "left"
+                        root.manager.transition.duration = .25
+                        root.manager.current = "itemTotal"
+        AnchorLayout:
+            Label:
+                text: 'Items'                         
 
 # Item totaling screen after all items are added
-#<ItemTotaling>:
+<ItemTotalling>:
+    Button:
+        text: 'Back'
+        on_press:
+            root.manager.transition.direction = "right"
+            root.manager.transition.duration = .25
+            root.manager.current = "saleProcessing"
 
 # Receipt shown after amount is paid
 #<Receipt>:
@@ -123,6 +164,9 @@ class SalesReport(Screen):
 class Schedule(Screen):
     pass
 
+class ItemTotalling(Screen):
+    pass
+
 screen_manager = ScreenManager()
 screen_manager.add_widget(MainMenu(name="mainMenu"))
 screen_manager.add_widget(SaleProcessing(name="saleProcessing"))
@@ -130,6 +174,7 @@ screen_manager.add_widget(ReturnProcessing(name="returnProcessing"))
 screen_manager.add_widget(OnHandManagement(name="onHands"))
 screen_manager.add_widget(SalesReport(name="salesReport"))
 screen_manager.add_widget(Schedule(name="schedule"))
+screen_manager.add_widget(ItemTotalling(name="itemTotal"))
 
 class PoSApp(App):
 
