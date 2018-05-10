@@ -1,3 +1,4 @@
+ID,  Product Name, Price
 (0.0, 'T-shirt', 20.99)
 (1.0, 'Socks', 13.0)
 (2.0, 'Necklace', 13.0)
