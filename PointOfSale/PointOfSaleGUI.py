@@ -81,11 +81,14 @@ Builder.load_string("""
                 Button:
                     text: 'Back'
                     on_press:
+                        #itemPanel.text = ''
                         root.manager.transition.direction = "right"
                         root.manager.transition.duration = .25
                         root.manager.current = "mainMenu"
                 Button: 
                     text: 'Add'
+                    on_press:
+                        itemPanel.item_strings.append(root.AcceptEntry(skuEntry.text, qtyEntry.text))
                 Button:
                     text: 'Total'
                     on_press:
@@ -93,8 +96,9 @@ Builder.load_string("""
                         root.manager.transition.duration = .25
                         root.manager.current = "itemTotal"
         AnchorLayout:
-            Label:
-                text: 'Items'                         
+            ListView:
+                id: itemPanel
+                item_strings: ["Items"]                         
 
 # Item totaling screen after all items are added
 <ItemTotalling>:
@@ -150,7 +154,10 @@ class MainMenu(Screen):
     pass
 
 class SaleProcessing(Screen):
-    pass
+
+    def AcceptEntry(self, sku, quantity):
+        entry = "\n" + sku + "@" + quantity
+        return entry
 
 class ReturnProcessing(Screen):
     pass
@@ -175,6 +182,8 @@ screen_manager.add_widget(OnHandManagement(name="onHands"))
 screen_manager.add_widget(SalesReport(name="salesReport"))
 screen_manager.add_widget(Schedule(name="schedule"))
 screen_manager.add_widget(ItemTotalling(name="itemTotal"))
+
+
 
 class PoSApp(App):
 
